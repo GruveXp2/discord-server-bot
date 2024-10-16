@@ -30,9 +30,10 @@ public class ServerCommand extends ListenerAdapter {
                     return;
                 }
 
-                switch (subcommand) {
-                    case "stats" -> handleStats(event);
-                    default -> event.reply("Unknown subcommand!").queue();
+                if (subcommand.equals("stats")) {
+                    handleStats(event);
+                } else {
+                    event.reply("Unknown subcommand!").queue();
                 }
             }
         }
