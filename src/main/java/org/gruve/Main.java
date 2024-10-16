@@ -134,16 +134,12 @@ public class Main {
                 return; // trenger ikke å fikse timer greier eller oppdatere melding pga den endres ikke uansett
             }
         }
-        int hours = statusTime / 3600;
-        int minutes = (statusTime / 60) % 60;
-        int seconds = statusTime % 60;
-        String time = hours > 0 ? hours + "hr " : "";
-        if (hours > 0 || minutes > 0) time += minutes + "min ";
-        time += seconds + "s";
+        String time = Util.secondsToTimeString(statusTime);
+
         switch (status) {
             case LOADING -> {}
             case STARTING -> {
-                if (minutes >= 1) {
+                if (statusTime >= 60) {
                     setServerStatus(ServerStatus.PLUGIN_BUG);
                     return;
                 }
