@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ServerTimeout {
 
-    private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static ScheduledFuture<?> timeoutTask;
     private static int timeoutSeconds = 0;
 
