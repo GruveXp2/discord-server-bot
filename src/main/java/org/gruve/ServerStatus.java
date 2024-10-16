@@ -7,6 +7,7 @@ public enum ServerStatus {
     STARTING,
     ONLINE,
     CLOSING,
+    TIMEOUT,
     VPN,
     PLUGIN_BUG,
     ERROR

@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 import net.dv8tion.jda.api.utils.messages.MessageEditData;
@@ -26,6 +27,12 @@ public class Listeners extends ListenerAdapter {
                 new SubcommandData("stats", "Prints the stats of each member in the tribe")
         ).queue();
         guild.upsertCommand("runcommand", "Runs a command").addOption(OptionType.STRING, "command", "a command to send to the minecraft server").queue();
+        guild.upsertCommand("timeoutserver", "Disables the server for the set amount of time").addOptions(
+                new OptionData(OptionType.INTEGER, "hrs", "hours"),
+                new OptionData(OptionType.INTEGER, "min", "minutes"),
+                new OptionData(OptionType.INTEGER, "sec", "seconds")
+        ).queue();
+        guild.upsertCommand("stopservertimeout", "If the server is on a timeout, this will stop the timeout so the server can be opened again").queue();
         guild.upsertCommand("open", "Opens a server").queue();
     }
 
