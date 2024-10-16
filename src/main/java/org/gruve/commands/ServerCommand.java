@@ -21,18 +21,7 @@ public class ServerCommand extends ListenerAdapter {
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         String command = event.getName();
         switch (command) {
-            case "open" -> {
-
-                Button kingdoms = Button.secondary("open-kingdoms", "Kingdoms");
-                Button tribes = Button.secondary("open-tribes", "Tribes");
-                Button botbows = Button.secondary("open-botbows", "BotBows");
-                Button sumo = Button.secondary("open-sumo", "Sumo");
-
-                ActionRow actionRow = ActionRow.of(kingdoms, tribes, botbows, sumo);
-                event.reply("Select server to open:")
-                        .setComponents(actionRow)
-                        .queue();
-            }
+            case "open" -> handleServerOpen(event);
             case "runcommand" -> handleMinecraftCommand(event);
             case "tribes", "tribe" -> {
                 String subcommand = event.getSubcommandName();
@@ -70,6 +59,33 @@ public class ServerCommand extends ListenerAdapter {
                     Main.updateStatusMessage(message, "green", "Command sent successfully");
                 }
             });
+        }
+    }
+
+    private static void handleServerOpen(@NotNull SlashCommandInteractionEvent event) {
+        if (Main.serverStatus == ServerStatus.TIMEOUT) {
+            event.reply(":red_circle: The server is on a timeout and cannot be opened right now").queue(hook -> {
+                // Save the channel ID immediately
+                Main.lastStatusMessageChannelID = Long.parseLong(event.getChannel().getId());
+                System.out.println("Sent in channel " + event.getChannel().getId());
+
+                // Use the InteractionHook to retrieve the message after it has been sent
+                hook.retrieveOriginal().queue(sentMessage -> {
+                    // Save the message ID after the message is sent
+                    Main.lastStatusMessageID = Long.parseLong(sentMessage.getId());
+                    System.out.println("Message ID: " + sentMessage.getId());
+                });
+            });
+        } else {
+            Button kingdoms = Button.secondary("open-kingdoms", "Kingdoms");
+            Button tribes = Button.secondary("open-tribes", "Tribes");
+            Button botbows = Button.secondary("open-botbows", "BotBows");
+            Button sumo = Button.secondary("open-sumo", "Sumo");
+
+            ActionRow actionRow = ActionRow.of(kingdoms, tribes, botbows, sumo);
+            event.reply("Select server to open:")
+                    .setComponents(actionRow)
+                    .queue();
         }
     }
 
