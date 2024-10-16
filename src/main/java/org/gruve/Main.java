@@ -45,7 +45,7 @@ public class Main {
                 String result = ServerCommunicator.sendCommandToServerAndGetResult("@ping");
                 if (result.startsWith("<e2>")) { // public ip doesnt work
                     result = ServerCommunicator.sendCommandToServerAndGetResult("@ping", "localhost");
-                    if (result.startsWith("<e2>")) { // localhost doesnt work either, so its offline and is starting
+                    if (result.startsWith("<e2>")) { // localhost doesn't work either, so its offline and is starting
                         if (serverStatus == ServerStatus.OFFLINE || serverStatus == ServerStatus.STARTING || serverStatus == ServerStatus.LOADING) {
                             setServerStatus(ServerStatus.STARTING);
                         } else {
