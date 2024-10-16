@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.requests.RestAction;
 
 public class Util {
 
-    public void replyToMessage(long channelID, long messageID, String reply) {
+    public static void replyToMessage(long channelID, long messageID, String reply) {
         // Get the TextChannel by ID
         TextChannel channel = Main.JDA.getTextChannelById(921820957268668486L);
         if (channel == null) {
