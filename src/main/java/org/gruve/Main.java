@@ -131,6 +131,8 @@ public class Main {
         } else {
             System.out.println("Status unchanged: " + serverStatus);
             if (status == ServerStatus.OFFLINE || status == ServerStatus.CLOSING) {
+                lastStatusMessageID = 0; // slutter å tracke melding
+                lastStatusMessageChannelID = 0;
                 return; // trenger ikke å fikse timer greier eller oppdatere melding pga den endres ikke uansett
             }
         }
