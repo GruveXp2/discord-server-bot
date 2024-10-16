@@ -59,6 +59,8 @@ public class Main {
                     setServerStatusMessage(result);
                 }
                 currentServer = ServerCommunicator.getCurrentServer();
+            } else if (serverStatus == ServerStatus.TIMEOUT) {
+                setServerStatus(ServerStatus.TIMEOUT);
             } else {
                 setServerStatus(ServerStatus.OFFLINE);
                 System.out.println("Set to OFFLINE bc pid isnt server");
@@ -164,6 +166,11 @@ public class Main {
             case OFFLINE -> {
                 updateOpenMessage("red", "Server closed. Reopen by doing /open");
                 setServerStatusMessage("Server offline");
+            }
+            case TIMEOUT -> {
+                String timeoutLeft = ServerTimeout.getTimeoutString();
+                updateOpenMessage("red", "Server is temporarily disabled(" + timeoutLeft + " left). @Gruve is probably busy with something or the server cant be on at the moment. Contact Colin or Gruve if you have questions");
+                setServerStatusMessage("Server disabled (" + timeoutLeft + " left)");
             }
             case ERROR -> updateOpenMessage("red", "The server/plugin is bugged, please contact @Gruve");
         }

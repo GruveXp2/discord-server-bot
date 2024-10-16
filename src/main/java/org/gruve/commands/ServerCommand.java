@@ -23,6 +23,8 @@ public class ServerCommand extends ListenerAdapter {
         switch (command) {
             case "open" -> handleServerOpen(event);
             case "runcommand" -> handleMinecraftCommand(event);
+            case "timeoutserver" -> handleTimeout(event);
+            case "stopservertimeout" -> handleStopTimeout(event);
             case "tribes", "tribe" -> {
                 String subcommand = event.getSubcommandName();
                 if (subcommand == null) {
@@ -59,6 +61,25 @@ public class ServerCommand extends ListenerAdapter {
                     Main.updateStatusMessage(message, "green", "Command sent successfully");
                 }
             });
+        }
+    }
+
+    private static void handleTimeout(@NotNull SlashCommandInteractionEvent event) {
+        int hours = event.getOption("hrs") != null ? event.getOption("hrs").getAsInt() : 0;
+        int minutes = event.getOption("min") != null ? event.getOption("min").getAsInt() : 0;
+        int seconds = event.getOption("sec") != null ? event.getOption("sec").getAsInt() : 0;
+        int totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        if (totalSeconds < 1) event.reply("You must specify a positive amount of time").setEphemeral(true).queue();
+        ServerTimeout.setTimeout(totalSeconds);
+        event.reply("Successfully set server timeout to " + Util.secondsToTimeString(totalSeconds)).queue();
+    }
+
+    private static void handleStopTimeout(@NotNull SlashCommandInteractionEvent event) {
+        if (Main.serverStatus == ServerStatus.TIMEOUT) {
+            ServerTimeout.stopTimeout();
+            event.reply("The server timeout was stopped, and the server is able to be opened").queue();
+        } else {
+            event.reply("Nothing happened, there was no timeout to stop").queue();
         }
     }
 
