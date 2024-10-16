@@ -38,7 +38,6 @@ public class Main {
         JDA.addEventListener(new ServerCommand());
         JDA.awaitReady();
         initServerStatusMessageIDs();
-        setServerStatus(ServerStatus.OFFLINE);
 
         scheduler.scheduleAtFixedRate(() -> {
             if (ServerCommunicator.isServerRunning()) { // if the server program is running on the pc
