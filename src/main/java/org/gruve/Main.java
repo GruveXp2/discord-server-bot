@@ -71,8 +71,8 @@ public class Main {
 
     private static void initServerStatusMessageIDs() { // reads the message and channel id from a file to update it
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(DISCORD_STATUS_MESSAGE_ID_LOCATION), StandardCharsets.UTF_8))) {
-            lastStatusMessageChannelID = Long.valueOf(reader.readLine());
-            lastStatusMessageID = Long.valueOf(reader.readLine());
+            lastStatusMessageChannelID = Long.parseLong(reader.readLine());
+            lastStatusMessageID = Long.parseLong(reader.readLine());
         } catch (IOException e) {
             e.printStackTrace();
         }
