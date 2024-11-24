@@ -29,10 +29,10 @@ public class Util {
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds / 60) % 60;
         String time = hours > 0 ? hours + "hr " : "";
-        if (hours > 0 || minutes > 0) time += minutes + "min ";
+        if (hours > 0 || minutes > 0) time += minutes + "min";
         if (totalSeconds < 120) {
             int seconds = totalSeconds % 60;
-            time += seconds + "s";
+            time += " " + seconds + "s";
         }
         return time;
     }
