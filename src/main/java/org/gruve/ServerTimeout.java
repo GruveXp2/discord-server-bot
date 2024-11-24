@@ -33,10 +33,6 @@ public class ServerTimeout {
     }
 
     public static String getTimeoutString() {
-        if (timeoutSeconds >= 120) {
-            return Util.secondsToMinutesTimeString(timeoutSeconds);
-        } else {
-            return Util.secondsToTimeString(timeoutSeconds);
-        }
+        return Util.secondsToTimeString(timeoutSeconds);
     }
 }
