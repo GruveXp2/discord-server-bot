@@ -28,18 +28,12 @@ public class Util {
     public static String secondsToTimeString(int totalSeconds) {
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds / 60) % 60;
-        int seconds = totalSeconds % 60;
         String time = hours > 0 ? hours + "hr " : "";
         if (hours > 0 || minutes > 0) time += minutes + "min ";
-        time += seconds + "s";
-        return time;
-    }
-
-    public static String secondsToMinutesTimeString(int totalSeconds) {
-        int hours = totalSeconds / 3600;
-        int minutes = (totalSeconds / 60) % 60;
-        String time = hours > 0 ? hours + "hr " : "";
-        if (hours > 0 || minutes > 0) time += minutes + "min ";
+        if (totalSeconds < 120) {
+            int seconds = totalSeconds % 60;
+            time += seconds + "s";
+        }
         return time;
     }
 }
