@@ -21,7 +21,13 @@ public class ServerCommunicator {
                 return false;
             }
             //System.out.print(pid + ": ");
-            Process process = Runtime.getRuntime().exec("tasklist /FI \"PID eq " + pid + "\" /FO CSV /NH");
+            String[] command = {
+                    "tasklist",
+                    "/FI", "PID eq " + pid,
+                    "/FO", "CSV",
+                    "/NH"
+            };
+            Process process = Runtime.getRuntime().exec(command);
             String output = new String(process.getInputStream().readAllBytes());
             return output.contains(pid);
         } catch (IOException e) {
