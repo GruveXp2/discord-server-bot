@@ -163,6 +163,10 @@ public class Main {
                 setServerStatusInfo("Server online");
             }
             case CLOSING -> {
+                if (statusTime >= 60) {
+                    setServerStatus(ServerStatus.PLUGIN_BUG);
+                    return;
+                }
                 updateOpenMessage("red", "Server closing...");
                 setServerStatusInfo("Server closing...");
             }
