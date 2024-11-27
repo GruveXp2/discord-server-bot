@@ -31,8 +31,11 @@ public class Util {
         String time = hours > 0 ? hours + "hr " : "";
         if (hours > 0 || minutes > 0) time += minutes + "min";
         if (totalSeconds < 120) {
+            if (totalSeconds >= 60) {
+                time += " ";
+            }
             int seconds = totalSeconds % 60;
-            time += " " + seconds + "s";
+            time += seconds + "s";
         }
         return time;
     }
