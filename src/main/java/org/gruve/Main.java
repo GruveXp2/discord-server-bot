@@ -22,8 +22,10 @@ public class Main {
     public static final String DISCORD_STATUS_MESSAGE_ID_LOCATION = "C:\\Users\\gruve\\Desktop\\Server\\discord-server-status-message-id.txt";
     public static final int SERVER_PORT = 25566; // port used to communicate with the server plugin
     public static String currentServer = "N/A";
+    public static String serverStatusInfo = "Loading...";
     public static String serverStatusMessage = "Loading...";
     public static ServerStatus serverStatus = ServerStatus.LOADING;
+    public static int lastStatusTime = 0; // how many seconds the last status has been, used for stuff like when it says server closed, it says for how long it was open
     public static int statusTime = 0; // how many seconds the current status has been
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     protected static JDA JDA;
@@ -56,7 +58,7 @@ public class Main {
                     }
                 } else {
                     setServerStatus(ServerStatus.ONLINE);
-                    setServerStatusMessage(result);
+                    setServerStatusInfo(result);
                 }
                 currentServer = ServerCommunicator.getCurrentServer();
             } else if (serverStatus == ServerStatus.TIMEOUT) {
@@ -89,9 +91,11 @@ public class Main {
     }
 
     public static void updateOpenMessage(String statusColor, String updatedStatus) {
+        if (serverStatusMessage.equals(updatedStatus)) return;
+        serverStatusMessage = updatedStatus;
         TextChannel channel = JDA.getTextChannelById(lastStatusMessageChannelID);
         if (channel == null) return;
-        channel.retrieveMessageById(lastStatusMessageID).queue(message -> updateStatusMessage(message, statusColor, updatedStatus), throwable -> {
+        channel.retrieveMessageById(lastStatusMessageID).queue(message -> updateStatusMessage(message, statusColor, updatedStatus), _ -> {
             // No action is required if the message does not exist or any other error occurs
             // Just a placeholder to meet the method signature requirement
         });
@@ -126,7 +130,8 @@ public class Main {
             status = ServerStatus.PLUGIN_BUG;
         }
         if (status != serverStatus) {
-            statusTime = 0;
+            lastStatusTime = statusTime;
+            if (status != ServerStatus.CLOSING) statusTime = 0;
             System.out.println("Status changed: " + serverStatus + " -> " + status);
         } else {
             System.out.println("Status unchanged: " + serverStatus);
@@ -146,7 +151,7 @@ public class Main {
                     return;
                 }
                 Main.updateOpenMessage("yellow", "The server is starting... (" + time + ")");
-                setServerStatusMessage("Starting server...");
+                setServerStatusInfo("Starting server...");
             }
             case ONLINE -> Main.updateOpenMessage("green", "Server is open (" + time + ")");
             case VPN -> Main.updateOpenMessage("orange", "Server is open, " +
@@ -155,29 +160,29 @@ public class Main {
             case PLUGIN_BUG -> {
                 updateOpenMessage("green", "Server is open, " +
                         "but the discord bot failed to connect to it (" + time + "). The plugin is probably outdated or bugged");
-                setServerStatusMessage("Server online");
+                setServerStatusInfo("Server online");
             }
             case CLOSING -> {
                 updateOpenMessage("red", "Server closing...");
-                setServerStatusMessage("Server closing...");
+                setServerStatusInfo("Server closing...");
             }
             case OFFLINE -> {
-                updateOpenMessage("red", "Server closed. Reopen by doing /open");
-                setServerStatusMessage("Server offline");
+                updateOpenMessage("red", "Server closed after " + Util.secondsToTimeString(lastStatusTime) + ". Reopen by doing /open");
+                setServerStatusInfo("Server offline");
             }
             case TIMEOUT -> {
                 String timeoutLeft = ServerTimeout.getTimeoutString();
                 updateOpenMessage("red", "Server is temporarily disabled(" + timeoutLeft + " left). @Gruve is probably busy with something or the server cant be on at the moment. Contact Colin or Gruve if you have questions");
-                setServerStatusMessage("Server disabled (" + timeoutLeft + " left)");
+                setServerStatusInfo("Server disabled (" + timeoutLeft + " left)");
             }
             case ERROR -> updateOpenMessage("red", "The server/plugin is bugged, please contact @Gruve");
         }
         serverStatus = status;
     }
 
-    private static void setServerStatusMessage(String statusMessage) {
-        if (Objects.equals(statusMessage, serverStatusMessage)) return;
-        serverStatusMessage = statusMessage;
+    private static void setServerStatusInfo(String statusMessage) {
+        if (Objects.equals(statusMessage, serverStatusInfo)) return;
+        serverStatusInfo = statusMessage;
         JDA.getPresence().setActivity(Activity.customStatus(statusMessage));
     }
 }
