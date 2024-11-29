@@ -158,6 +158,12 @@ public class Main {
                     "but @Gruve uses his VPN. To be able to connect to the server, " +
                     "please tell him to turn off his VPN. (" + time + ")");
             case PLUGIN_BUG -> {
+                if (Objects.equals(currentServer, "sumo")) {
+                    updateOpenMessage("green", "Sumo server is open(" + time + "), " +
+                            "but the plugin doesnt work at the moment, this is bc sumo will get merged into the botbows server Soon:tm:");
+                    setServerStatusInfo("Server online");
+                    return;
+                }
                 updateOpenMessage("green", "Server is open, " +
                         "but the discord bot failed to connect to it (" + time + "). The plugin is probably outdated or bugged");
                 setServerStatusInfo("Server online");
@@ -173,6 +179,8 @@ public class Main {
             case OFFLINE -> {
                 updateOpenMessage("red", "Server closed after " + Util.secondsToTimeString(lastStatusTime) + ". Reopen by doing /open");
                 setServerStatusInfo("Server offline");
+                lastStatusMessageID = 0; // skal ikke endre på meldinga når serveren er lukka
+                saveServerStatusMessageIDs();
             }
             case TIMEOUT -> {
                 String timeoutLeft = ServerTimeout.getTimeoutString();
