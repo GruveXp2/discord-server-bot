@@ -16,6 +16,7 @@ public class ServerCommunicator {
             String pid;
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(SERVER_PID_LOCATION), StandardCharsets.UTF_16))) {
                 pid = reader.readLine().trim();
+                if (pid.equals("0")) return false;
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
@@ -33,6 +34,14 @@ public class ServerCommunicator {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public static void resetServerPID() { // saves the message ids so if the bot restarts it still has access to the message
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SERVER_PID_LOCATION))) {
+            writer.write(0);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -138,6 +138,7 @@ public class Main {
             if (status == ServerStatus.OFFLINE || status == ServerStatus.CLOSING) {
                 lastStatusMessageID = 0; // slutter å tracke melding
                 lastStatusMessageChannelID = 0;
+                ServerCommunicator.resetServerPID(); // resetter server pid sånn at det ikke kommer opp at serveren er åpen når botten starter igjen
                 return; // trenger ikke å fikse timer greier eller oppdatere melding pga den endres ikke uansett
             }
         }
