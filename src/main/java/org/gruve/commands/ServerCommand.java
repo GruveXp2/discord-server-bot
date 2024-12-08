@@ -157,6 +157,9 @@ public class ServerCommand extends ListenerAdapter {
                 return "Another server is already running (" + Main.currentServer + ")";
             }
         }
+        if (Main.serverStatus == ServerStatus.LOADING) {
+            return "The server is already starting";
+        }
         selectServer(serverID);
         System.out.println("Selected server: " + serverID);
         String out = "Selected server: " + serverID;

@@ -28,7 +28,7 @@ public class ServerTimeout {
 
     public static void stopTimeout() {
         timeoutTask.cancel(false);
-        Main.setServerStatus(ServerStatus.OFFLINE);
+        Main.setServerStatus(ServerStatus.INITIALIZING);
         timeoutSeconds = 0;
     }
 
