@@ -114,12 +114,12 @@ public class Main {
                 }
                 case ONLINE, PLUGIN_BUG, VPN, STARTING -> setServerStatus(ServerStatus.CLOSING);
                 case CLOSING -> {
+                    setServerStatus(ServerStatus.OFFLINE); // setter til offline først sånn at det kan displayes at serveren er skrudd av
                     lastStatusMessageID = 0; // slutter å tracke melding, skal ikke endre på meldinga når serveren er lukka
                     lastStatusMessageChannelID = 0;
                     saveServerStatusMessageIDs();
 
                     ServerCommunicator.resetServerPID(); // resetter server pid sånn at det ikke kommer opp at serveren er åpen når botten starter igjen
-                    setServerStatus(ServerStatus.OFFLINE);
                 }
                 case OFFLINE, INITIALIZING -> setServerStatus(ServerStatus.OFFLINE);
                 case TIMEOUT -> setServerStatus(ServerStatus.TIMEOUT);
@@ -145,15 +145,6 @@ public class Main {
     }
 
     public static void setServerStatus(ServerStatus status) {
-        if (status != serverStatus) {
-            if (shouldResetTimer(serverStatus, status)) {
-                lastStatusTime = statusTime;
-                statusTime = 0;
-            }
-            System.out.println("Status changed: " + serverStatus + " -> " + status);
-        } else {
-            System.out.println("Status unchanged: " + serverStatus);
-        }
         String time = Util.secondsToTimeString(statusTime);
 
         switch (status) {
@@ -191,6 +182,15 @@ public class Main {
                 setServerStatusInfo("Server disabled (" + timeoutLeft + " left)");
             }
             case ERROR -> updateOpenMessage("red", "The server/plugin is bugged, please contact @Gruve");
+        }
+        if (status != serverStatus) {
+            if (shouldResetTimer(serverStatus, status)) {
+                lastStatusTime = statusTime;
+                statusTime = 0;
+            }
+            System.out.println("Status changed: " + serverStatus + " -> " + status);
+        } else {
+            System.out.println("Status unchanged: " + serverStatus);
         }
         serverStatus = status;
     }
