@@ -25,7 +25,6 @@ public class Main {
     public static String serverStatusInfo = "Loading...";
     public static String serverStatusMessage = "Loading...";
     public static ServerStatus serverStatus = ServerStatus.INITIALIZING;
-    public static int lastStatusTime = 0; // how many seconds the last status has been, used for stuff like when it says server closed, it says for how long it was open
     public static int statusTime = 0; // how many seconds the current status has been
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     protected static JDA JDA;
@@ -42,6 +41,11 @@ public class Main {
         initServerStatusMessageIDs();
 
         scheduler.scheduleAtFixedRate(Main::pingServer, 0, STATUS_SCAN_INTERVAL, TimeUnit.SECONDS);
+    }
+
+    public static void restartBot() {
+        initServerStatusMessageIDs();
+        setServerStatus(ServerStatus.INITIALIZING);
     }
 
     private static void initServerStatusMessageIDs() { // reads the message and channel id from a file to update it
@@ -91,7 +95,7 @@ public class Main {
                 case NO_CONNECTION -> {
                     switch (serverStatus) {
                         case INITIALIZING, OFFLINE, LOADING, FILE_BUG, STARTING -> {
-                            if (serverStatus == ServerStatus.STARTING && statusTime < 30) {
+                            if ((serverStatus == ServerStatus.INITIALIZING || serverStatus == ServerStatus.LOADING || serverStatus == ServerStatus.STARTING) && statusTime < 40) {
                                 setServerStatus(ServerStatus.STARTING);
                             } else {
                                 setServerStatus(ServerStatus.PLUGIN_BUG);
@@ -141,7 +145,7 @@ public class Main {
 
         // Ikke resett hvis man går mellom forskjellige online statuser
         return (next == ServerStatus.ONLINE || next == ServerStatus.PLUGIN_BUG) &&
-                current != ServerStatus.ONLINE && current != ServerStatus.PLUGIN_BUG;
+                (current != ServerStatus.ONLINE && current != ServerStatus.PLUGIN_BUG && current != ServerStatus.STARTING);
     }
 
     public static void setServerStatus(ServerStatus status) {
@@ -150,6 +154,10 @@ public class Main {
         switch (status) {
             case INITIALIZING -> {}
             case LOADING -> {
+                Main.updateOpenMessage("yellow", "The server will start soon... (" + time + ")");
+                setServerStatusInfo("Server is starting soon...");
+            }
+            case STARTING -> {
                 Main.updateOpenMessage("yellow", "The server is starting... (" + time + ")");
                 setServerStatusInfo("Starting server...");
             }
@@ -173,7 +181,7 @@ public class Main {
                 setServerStatusInfo("Server closing...");
             }
             case OFFLINE -> {
-                updateOpenMessage("red", "Server closed after " + Util.secondsToTimeString(lastStatusTime) + ". Reopen by doing /open");
+                updateOpenMessage("red", "Server closed after " + Util.secondsToTimeString(statusTime) + ". Reopen by doing /open");
                 setServerStatusInfo("Server offline");
             }
             case TIMEOUT -> {
@@ -185,13 +193,13 @@ public class Main {
         }
         if (status != serverStatus) {
             if (shouldResetTimer(serverStatus, status)) {
-                lastStatusTime = statusTime;
                 statusTime = 0;
             }
-            System.out.println("Status changed: " + serverStatus + " -> " + status);
+            System.out.print("Status changed: " + serverStatus + " -> " + status);
         } else {
-            System.out.println("Status unchanged: " + serverStatus);
+            System.out.print("Status unchanged: " + serverStatus);
         }
+        System.out.println(" (" + statusTime + ")");
         serverStatus = status;
     }
 
