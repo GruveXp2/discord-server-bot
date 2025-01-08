@@ -20,6 +20,7 @@ public class ServerCommand extends ListenerAdapter {
         String command = event.getName();
         switch (command) {
             case "open" -> handleServerOpen(event);
+            case "restart" -> handleRestart(event);
             case "runcommand" -> handleMinecraftCommand(event);
             case "timeoutserver" -> handleTimeout(event);
             case "stopservertimeout" -> handleStopTimeout(event);
@@ -39,6 +40,11 @@ public class ServerCommand extends ListenerAdapter {
         }
     }
 
+    private void handleRestart(@NotNull SlashCommandInteractionEvent event) {
+        Main.restartBot();
+        event.reply("The bot will now restart and hopefully fix the bugs if there were any").queue();
+    }
+
     private void handleStats(@NotNull SlashCommandInteractionEvent event) {
         // Your code to handle the "stats" subcommand
         //Main.
@@ -49,6 +55,8 @@ public class ServerCommand extends ListenerAdapter {
         String commandString = event.getOption("command") != null ? event.getOption("command").getAsString() : "";
         if (commandString.isEmpty()) {
             event.reply("No command provided.").setEphemeral(true).queue();
+        } else if (Objects.equals(Main.currentServer, "tribes") && commandString.contains("op ")) {
+            event.reply("Command sent to server: `" + commandString + "`\n Nice try, being OP is not allowed in tribes").queue();
         } else {
             event.reply("Command sent to server: `" + commandString + "`\n" +
                     ":yellow_circle: Sending to server...").queue(message -> {
@@ -100,9 +108,9 @@ public class ServerCommand extends ListenerAdapter {
             Button kingdoms = Button.secondary("open-kingdoms", "Kingdoms");
             Button tribes = Button.secondary("open-tribes", "Tribes");
             Button botbows = Button.secondary("open-botbows", "BotBows");
-            Button sumo = Button.secondary("open-sumo", "Sumo");
+            Button cobblemon = Button.secondary("open-cobblemon", "Cobblemon");
 
-            ActionRow actionRow = ActionRow.of(kingdoms, tribes, botbows, sumo);
+            ActionRow actionRow = ActionRow.of(kingdoms, tribes, botbows, cobblemon);
             event.reply("Select server to open:")
                     .setComponents(actionRow)
                     .queue();
