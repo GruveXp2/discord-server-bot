@@ -177,6 +177,10 @@ public class Main {
                         "but the discord bot failed to connect to it (" + time + "). The plugin is probably outdated or bugged");
                 setServerStatusInfo("Server online");
             }
+            case FILE_BUG -> {
+                updateOpenMessage("red", "There is a bug in the server files, pls contact Gruve (" + time + ")");
+                setServerStatusInfo("Server files bugged");
+            }
             case CLOSING -> {
                 updateOpenMessage("red", "Server closing...");
                 setServerStatusInfo("Server closing...");
