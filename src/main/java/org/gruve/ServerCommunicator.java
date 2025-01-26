@@ -15,7 +15,9 @@ public class ServerCommunicator {
         try {
             String pid;
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(SERVER_PID_LOCATION), StandardCharsets.UTF_16))) {
-                pid = reader.readLine().trim();
+                pid = reader.readLine();
+                if (pid == null) return false;
+                pid = pid.trim();
                 if (pid.equals("0")) return false;
             } catch (IOException e) {
                 e.printStackTrace();
