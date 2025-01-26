@@ -173,14 +173,19 @@ public class ServerCommand extends ListenerAdapter {
         String out = "Selected server: " + serverID;
 
         ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", "/b", "start_server.bat");
-        processBuilder.directory(new File(Main.SERVER_BAT_PATH));
+        processBuilder.directory(new File(
+                serverID.equals("cobblemon") ? Main.FABRIC_SERVER_BAT_PATH : Main.SERVER_BAT_PATH));
         try {
             serverProcess = processBuilder.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        out += "\n:white_circle: Loading...";
-        out = "/1" + out; // to update the status when its started
+        if (serverID.equals("cobblemon")) {
+            out += "\n:green_circle: Server is starting, will be open in about 30 seconds";
+        } else {
+            out += "\n:white_circle: Loading...";
+            out = "/1" + out; // to update the status when its started
+        }
         return out;
     }
 }

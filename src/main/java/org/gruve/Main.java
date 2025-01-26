@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static final String SERVER_BAT_PATH = "C:\\Users\\gruve\\Desktop\\Server";
+    public static final String FABRIC_SERVER_BAT_PATH = "C:\\Users\\gruve\\Desktop\\Fabric Server";
     public static final String SERVER_IP = "localhost";
     public static final String DISCORD_STATUS_MESSAGE_ID_LOCATION = "C:\\Users\\gruve\\Desktop\\Server\\discord-server-status-message-id.txt";
     public static final int SERVER_PORT = 25566; // port used to communicate with the server plugin
