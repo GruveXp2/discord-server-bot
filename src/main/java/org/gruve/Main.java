@@ -17,10 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static final String SERVER_BAT_PATH = "C:\\Users\\gruve\\Desktop\\Server";
-    public static final String FABRIC_SERVER_BAT_PATH = "C:\\Users\\gruve\\Desktop\\Fabric Server";
     public static final String SERVER_IP = "localhost";
-    public static final String DISCORD_STATUS_MESSAGE_ID_LOCATION = "C:\\Users\\gruve\\Desktop\\Server\\discord-server-status-message-id.txt";
     public static final int SERVER_PORT = 25566; // port used to communicate with the server plugin
     public static String currentServer = "N/A";
     public static String serverStatusInfo = "Loading...";
@@ -50,7 +47,7 @@ public class Main {
     }
 
     private static void initServerStatusMessageIDs() { // reads the message and channel id from a file to update it
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(DISCORD_STATUS_MESSAGE_ID_LOCATION), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.DISCORD_STATUS_MESSAGE_ID_LOCATION), StandardCharsets.UTF_8))) {
             lastStatusMessageChannelID = Long.parseLong(reader.readLine());
             lastStatusMessageID = Long.parseLong(reader.readLine());
         } catch (IOException e) {
@@ -59,7 +56,7 @@ public class Main {
     }
 
     public static void saveServerStatusMessageIDs() { // saves the message ids so if the bot restarts it still has access to the message
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DISCORD_STATUS_MESSAGE_ID_LOCATION))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FileLoc.DISCORD_STATUS_MESSAGE_ID_LOCATION))) {
             writer.write(Long.toString(lastStatusMessageChannelID));
             writer.newLine(); // Writes a newline character to separate the values
             writer.write(Long.toString(lastStatusMessageID));
