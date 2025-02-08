@@ -8,13 +8,10 @@ import java.util.Objects;
 
 public class ServerCommunicator {
 
-    static final String SERVER_PID_LOCATION = "C:\\Users\\gruve\\Desktop\\Server\\server-pid.txt"; // line 1
-    static final String SERVER_WORLD_ID_LOCATION = "C:\\Users\\gruve\\Desktop\\Server\\server-world.txt"; // line 1
-
     public static boolean isServerRunning() {
         try {
             String pid;
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(SERVER_PID_LOCATION), StandardCharsets.UTF_16))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.SERVER_PID_LOCATION), StandardCharsets.UTF_16))) {
                 pid = reader.readLine();
                 if (pid == null) return false;
                 pid = pid.trim();
@@ -40,7 +37,7 @@ public class ServerCommunicator {
     }
 
     public static void resetServerPID() { // saves the message ids so if the bot restarts it still has access to the message
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SERVER_PID_LOCATION))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FileLoc.SERVER_PID_LOCATION))) {
             writer.write(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,7 +46,7 @@ public class ServerCommunicator {
 
     public static String getCurrentServer() {
         String currentServer;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(SERVER_WORLD_ID_LOCATION), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.SERVER_WORLD_ID_LOCATION), StandardCharsets.UTF_8))) {
             currentServer = reader.readLine();
             return currentServer;
         } catch (IOException e) {
