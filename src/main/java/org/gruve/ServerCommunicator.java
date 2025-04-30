@@ -11,7 +11,7 @@ public class ServerCommunicator {
     public static boolean isServerRunning() {
         try {
             String pid;
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.SERVER_PID_LOCATION), StandardCharsets.UTF_16))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.SERVER_PID_PATH), StandardCharsets.UTF_16))) {
                 pid = reader.readLine();
                 if (pid == null) return false;
                 pid = pid.trim();
@@ -37,7 +37,7 @@ public class ServerCommunicator {
     }
 
     public static void resetServerPID() { // saves the message ids so if the bot restarts it still has access to the message
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FileLoc.SERVER_PID_LOCATION))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FileLoc.SERVER_PID_PATH))) {
             writer.write(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,7 +46,7 @@ public class ServerCommunicator {
 
     public static String getCurrentServer() {
         String currentServer;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.SERVER_WORLD_ID_LOCATION), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FileLoc.SERVER_WORLD_ID_PATH), StandardCharsets.UTF_8))) {
             currentServer = reader.readLine();
             return currentServer;
         } catch (IOException e) {

@@ -174,7 +174,7 @@ public class ServerCommand extends ListenerAdapter {
 
         ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", "/b", "start_server.bat");
         processBuilder.directory(new File(
-                serverID.equals("cobblemon") ? FileLoc.FABRIC_SERVER_BAT_PATH : FileLoc.SERVER_BAT_PATH));
+                serverID.equals("cobblemon") ? FileLoc.FABRIC_SERVER_BAT_FOLDER : FileLoc.SERVER_FOLDER));
         try {
             serverProcess = processBuilder.start();
         } catch (IOException e) {
