@@ -15,6 +15,12 @@
                     <model value="anthropic/claude-3-sonnet-20240229" />
                     <provider value="Anthropic" />
                     <title value="Claude 3 Sonnet" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
                   </llm>
                 </llm>
               </chat>
@@ -26,6 +32,12 @@
                     <model value="anthropic/claude-3-sonnet-20240229" />
                     <provider value="Anthropic" />
                     <title value="Claude 3 Sonnet" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
                   </llm>
                 </llm>
               </chat>
@@ -36,6 +48,12 @@
                     <model value="anthropic/claude-3-sonnet-20240229" />
                     <provider value="Anthropic" />
                     <title value="Claude 3 Sonnet" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
                   </llm>
                 </llm>
               </chat>
@@ -46,6 +64,12 @@
                     <model value="anthropic/claude-3-sonnet-20240229" />
                     <provider value="Anthropic" />
                     <title value="Claude 3 Sonnet" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
                   </llm>
                 </llm>
               </chat>
@@ -56,6 +80,12 @@
                     <model value="anthropic/claude-3-sonnet-20240229" />
                     <provider value="Anthropic" />
                     <title value="Claude 3 Sonnet" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
                   </llm>
                 </llm>
               </chat>
@@ -66,6 +96,12 @@
                     <model value="anthropic/claude-3-sonnet-20240229" />
                     <provider value="Anthropic" />
                     <title value="Claude 3 Sonnet" />
+                    <usage>
+                      <list>
+                        <option value="chat" />
+                        <option value="edit" />
+                      </list>
+                    </usage>
                   </llm>
                 </llm>
               </chat>
@@ -362,6 +398,42 @@
               </chat>
               <chat>
                 <internalId value="c39cea23-ba88-49a4-a1bf-163ab64d820e" />
+              </chat>
+              <chat>
+                <internalId value="530a4ca8-08e0-4427-b6c2-d9c878aad0a9" />
+              </chat>
+              <chat>
+                <internalId value="f3b911dc-1078-4526-9dc3-2cded45fdbdb" />
+              </chat>
+              <chat>
+                <internalId value="7582d31f-2b26-4b46-90c7-7a8db03891d5" />
+              </chat>
+              <chat>
+                <internalId value="102fd139-8c78-42aa-990e-452e961b5674" />
+              </chat>
+              <chat>
+                <internalId value="3398171c-972d-4fa0-b6cc-c849a2946789" />
+              </chat>
+              <chat>
+                <internalId value="76085304-4348-41b4-84fd-b6d3d15046c1" />
+              </chat>
+              <chat>
+                <internalId value="6c50f8d5-217a-4457-aa4b-e9311c4da2a6" />
+              </chat>
+              <chat>
+                <internalId value="fde2ca9f-5ad0-460e-a59d-9d8ab017ba92" />
+              </chat>
+              <chat>
+                <internalId value="8c26deab-ebe0-47aa-a91e-0f96d73c04ff" />
+              </chat>
+              <chat>
+                <internalId value="7a3f5137-5fdf-4f17-ad87-8098503e0b8b" />
+              </chat>
+              <chat>
+                <internalId value="9be24cfc-ef45-4bea-a84d-73f826b5b842" />
+              </chat>
+              <chat>
+                <internalId value="142fb9eb-0ed7-4588-bb18-6a6980779a94" />
               </chat>
             </list>
           </chats>
