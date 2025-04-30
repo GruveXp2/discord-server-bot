@@ -41,3 +41,8 @@ build/
 /.idea/
 /.idea/
 /src/main/java/org/gruve/FileLoc.java
+/.idea/
+/.gradle/
+/.idea/
+/gradle/
+/.idea/
