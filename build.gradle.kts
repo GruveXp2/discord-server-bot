@@ -95,4 +95,6 @@ tasks.named<ShadowJar>("shadowJar") {
     manifest {
         attributes["Main-Class"] = "org.gruve.Main"
     }
+    archiveVersion.set("")
+    archiveClassifier.set("")
 }
