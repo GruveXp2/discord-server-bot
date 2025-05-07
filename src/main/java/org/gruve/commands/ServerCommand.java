@@ -158,15 +158,17 @@ public class ServerCommand extends ListenerAdapter {
     }
 
     public static String startServer(String serverID) {
-        if ((serverProcess != null && serverProcess.isAlive()) || ServerCommunicator.isServerRunning()) {
-            if (Objects.equals(serverID, Main.currentServer)) {
-                return "Server is already running.";
-            } else {
-                return "Another server is already running (" + Main.currentServer + ")";
+        if (!serverID.equals("cobblemon")) {
+            if ((serverProcess != null && serverProcess.isAlive()) || ServerCommunicator.isServerRunning()) {
+                if (Objects.equals(serverID, Main.currentServer)) {
+                    return "Server is already running.";
+                } else {
+                    return "Another server is already running (" + Main.currentServer + ")";
+                }
             }
-        }
-        if (Main.serverStatus == ServerStatus.LOADING) {
-            return "The server is already starting";
+            if (Main.serverStatus == ServerStatus.LOADING) {
+                return "The server is already starting";
+            }
         }
         selectServer(serverID);
         System.out.println("Selected server: " + serverID);
