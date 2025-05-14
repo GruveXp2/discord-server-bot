@@ -184,7 +184,7 @@ public class Main {
             }
             case OFFLINE -> {
                 updateOpenMessage("red", "Server closed after " + Util.secondsToTimeString(statusTime) + ". Reopen by doing /open");
-                setServerStatusInfo("Server offline");
+                setServerStatusInfo("Vanilla server offline");
             }
             case TIMEOUT -> {
                 String timeoutLeft = ServerTimeout.getTimeoutString();
