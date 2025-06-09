@@ -29,6 +29,7 @@ public class Main {
     public static long lastStatusMessageChannelID;
     public static long lastStatusMessageID;
     public static final int STATUS_SCAN_INTERVAL = 5; // seconds
+    public static final int SERVER_STARTUP_TIME = 60; // seconds
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello world!");
@@ -93,7 +94,8 @@ public class Main {
                 case NO_CONNECTION -> {
                     switch (serverStatus) {
                         case INITIALIZING, OFFLINE, LOADING, FILE_BUG, STARTING -> {
-                            if ((serverStatus == ServerStatus.INITIALIZING || serverStatus == ServerStatus.LOADING || serverStatus == ServerStatus.STARTING) && statusTime < 40) {
+                            if ((serverStatus == ServerStatus.INITIALIZING || serverStatus == ServerStatus.LOADING
+                                    || serverStatus == ServerStatus.STARTING) && statusTime < SERVER_STARTUP_TIME) {
                                 setServerStatus(ServerStatus.STARTING);
                             } else {
                                 setServerStatus(ServerStatus.PLUGIN_BUG);
