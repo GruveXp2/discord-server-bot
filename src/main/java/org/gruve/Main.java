@@ -29,7 +29,7 @@ public class Main {
     public static long lastStatusMessageChannelID;
     public static long lastStatusMessageID;
     public static final int STATUS_SCAN_INTERVAL = 5; // seconds
-    public static final int SERVER_STARTUP_TIME = 60; // seconds
+    public static final int SERVER_STARTUP_TIME = 30; // seconds
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello world!");
