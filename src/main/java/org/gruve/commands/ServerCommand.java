@@ -37,6 +37,10 @@ public class ServerCommand extends ListenerAdapter {
                     event.reply("Unknown subcommand!").queue();
                 }
             }
+            case "ip" -> {
+                String ip = Util.getPublicIP();
+                event.reply("The current ip to the server is: `" + ip + "`").setEphemeral(true).queue();
+            }
         }
     }
 
