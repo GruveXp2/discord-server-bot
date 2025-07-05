@@ -35,6 +35,7 @@ public class Listeners extends ListenerAdapter {
         guild.upsertCommand("stopservertimeout", "If the server is on a timeout, this will stop the timeout so the server can be opened again").queue();
         guild.upsertCommand("open", "Opens a server").queue();
         guild.upsertCommand("restart", "Restarts this bot if its bugged").queue();
+        guild.upsertCommand("ip", "Gets the ip address of the servers").queue();
     }
 
     @Override

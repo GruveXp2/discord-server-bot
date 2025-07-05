@@ -4,6 +4,12 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.RestAction;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
 public class Util {
 
     public static void replyToMessage(long channelID, long messageID, String reply) {
@@ -38,5 +44,22 @@ public class Util {
             time += seconds + "s";
         }
         return time;
+    }
+
+    public static String getPublicIP() {
+        try {
+            URI uri = new URI("https://api.ipify.org");
+            URL url = uri.toURL();
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                return in.readLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
     }
 }
