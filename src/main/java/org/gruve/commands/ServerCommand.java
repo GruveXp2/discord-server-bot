@@ -39,7 +39,9 @@ public class ServerCommand extends ListenerAdapter {
             }
             case "ip" -> {
                 String ip = Util.getPublicIP();
-                event.reply("The current ip to the server is: `" + ip + "`").setEphemeral(true).queue();
+                event.reply("**IP to server:**\n" +
+                        "- Modded server (cobblemon): `" + ip + "`\n" +
+                        "- Vanilla server: `" + ip + ":" + FileLoc.VANILLA_PORT + "`").setEphemeral(true).queue();
             }
         }
     }
