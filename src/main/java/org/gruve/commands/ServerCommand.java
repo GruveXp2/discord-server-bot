@@ -52,18 +52,34 @@ public class ServerCommand extends ListenerAdapter {
     }
 
     private void handleStats(@NotNull SlashCommandInteractionEvent event) {
-        // Your code to handle the "stats" subcommand
-        //Main.
         event.reply("Work in progress, when its done its gonna print out game stats just like when you do /tribe stats ingame").queue();
+    }
+
+    private boolean validateCommand(@NotNull SlashCommandInteractionEvent event, String command) {
+        if (!Objects.equals(Main.currentServer, "tribes")
+                && !Objects.equals(Main.currentServer, "lifelink")) return true;
+
+        if (command.contains("op ")) {
+            event.reply("Command sent to server: `" + command + "`\n Nice try, being OP is not allowed in tribes").queue();
+        } else if (command.contains("give ")) {
+            event.reply("Command sent to server: `" + command + "`\n Nice try cheetah").queue();
+        } else if (command.contains("ban ")) {
+            event.reply("Command sent to server: `" + command + "`\n Bro what are you doing :skull:").queue();
+        } else if (command.contains("kick ")) {
+            event.reply("Command sent to server: `" + command + "`\n You attempted to kick someone. You missed :(").queue();
+        } else if (command.contains("tp ")) {
+            event.reply("Command sent to server: `" + command + "`\n Failed to tp, the server didnt have any ender pearls left").queue();
+        } else if (command.contains("summon ")) {
+            event.reply("Command sent to server: `" + command + "`\n (nothing happened)").queue();
+        } else return true;
+        return false;
     }
 
     private void handleMinecraftCommand(@NotNull SlashCommandInteractionEvent event) {
         String commandString = event.getOption("command") != null ? event.getOption("command").getAsString() : "";
         if (commandString.isEmpty()) {
             event.reply("No command provided.").setEphemeral(true).queue();
-        } else if (Objects.equals(Main.currentServer, "tribes") && commandString.contains("op ")) {
-            event.reply("Command sent to server: `" + commandString + "`\n Nice try, being OP is not allowed in tribes").queue();
-        } else {
+        } else if (validateCommand(event, commandString)) {
             event.reply("Command sent to server: `" + commandString + "`\n" +
                     ":yellow_circle: Sending to server...").queue(message -> {
                 String result = ServerCommunicator.sendCommandToServerAndGetResult(commandString);
