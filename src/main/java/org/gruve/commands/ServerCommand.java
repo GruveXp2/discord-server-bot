@@ -131,8 +131,9 @@ public class ServerCommand extends ListenerAdapter {
             Button tribes = Button.secondary("open-tribes", "Tribes");
             Button botbows = Button.secondary("open-botbows", "BotBows");
             Button cobblemon = Button.secondary("open-cobblemon", "Cobblemon");
+            Button lifeLink = Button.secondary("open-lifelink", "Lifelink");
 
-            ActionRow actionRow = ActionRow.of(kingdoms, tribes, botbows, cobblemon);
+            ActionRow actionRow = ActionRow.of(kingdoms, tribes, botbows, cobblemon, lifeLink);
             event.reply("Select server to open:")
                     .setComponents(actionRow)
                     .queue();
@@ -140,7 +141,7 @@ public class ServerCommand extends ListenerAdapter {
     }
 
     private static void selectServer(String serverID) {
-        try {
+        try { // ai
             // Command to run the Python script
             String[] command = {"python", "C:\\Users\\gruve\\Desktop\\select_server.py"};  // Ensure correct Python path
 
