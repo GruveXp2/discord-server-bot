@@ -71,6 +71,8 @@ public class ServerCommand extends ListenerAdapter {
             event.reply("Command sent to server: `" + command + "`\n Failed to tp, the server didnt have any ender pearls left").queue();
         } else if (command.contains("summon ")) {
             event.reply("Command sent to server: `" + command + "`\n (nothing happened)").queue();
+        } else if (command.contains("stop ")) {
+            event.reply("Command sent to server: `" + command + "`\n Player(s) are still on the server, it will close automatically when the last player leaves").queue();
         } else return true;
         return false;
     }
