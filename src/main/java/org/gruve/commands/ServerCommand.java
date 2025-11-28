@@ -69,6 +69,8 @@ public class ServerCommand extends ListenerAdapter {
             event.reply("Command sent to server: `" + command + "`\n You attempted to kick someone. You missed :(").queue();
         } else if (command.contains("tp ")) {
             event.reply("Command sent to server: `" + command + "`\n Failed to tp, the server didnt have any ender pearls left").queue();
+        } else if (command.contains("kill @e")) {
+            event.reply("Command sent to server: `" + command + "`\n (you will now get banned shortly)").queue();
         } else if (command.contains("summon ")) {
             event.reply("Command sent to server: `" + command + "`\n (nothing happened)").queue();
         } else if (command.contains("stop ")) {
