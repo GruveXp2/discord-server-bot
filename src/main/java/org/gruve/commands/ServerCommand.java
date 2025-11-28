@@ -40,7 +40,7 @@ public class ServerCommand extends ListenerAdapter {
             case "ip" -> {
                 String ip = Util.getPublicIP();
                 event.reply("**IP to server:**\n" +
-                        "- Modded server (cobblemon): `" + ip + "`\n" +
+                        "- Modded server (cobblemon): `" + ip + ":" + FileLoc.MODDED_PORT + "`\n" +
                         "- Vanilla server: `" + ip + ":" + FileLoc.VANILLA_PORT + "`").setEphemeral(true).queue();
             }
         }
