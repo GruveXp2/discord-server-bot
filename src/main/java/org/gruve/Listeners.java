@@ -50,7 +50,7 @@ public class Listeners extends ListenerAdapter {
                 Main.lastStatusMessageID = Long.parseLong(message.getId());
                 Main.lastStatusMessageChannelID = Long.parseLong(message.getChannelId());
                 Main.saveServerStatusMessageIDs();
-                Main.setServerStatus(ServerStatus.LOADING);
+                if (Main.serverStatus != ServerStatus.BACKING_UP) Main.setServerStatus(ServerStatus.LOADING);
             }
             MessageEditData editData = MessageEditBuilder.from(MessageEditData.fromMessage(message))
                     .setComponents(Collections.emptyList()) // removes the buttons

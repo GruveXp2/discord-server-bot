@@ -6,6 +6,8 @@ public enum ServerStatus {
     OFFLINE, // serveren er av
     LOADING, // serveren skal starte
     FILE_BUG, // hvis den har vært i starting for lenge så er det no galt med fila
+    BACKING_UP, // tar backup av serveren
+    BACKUP_FINISHED, // etter backupen, starter serveren
     STARTING, // serveren holder på å starte
     PLUGIN_BUG, // serveren har vært i loading for lenge
     ONLINE, // serveren er oppe

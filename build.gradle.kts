@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     api(libs.net.dv8tion.jda)
+    implementation("commons-io:commons-io:2.16.1")
 }
 
 val buildNumberFile = file("build-number.txt")

@@ -30,6 +30,7 @@ public class Main {
     public static long lastStatusMessageID;
     public static final int STATUS_SCAN_INTERVAL = 5; // seconds
     public static final int SERVER_STARTUP_TIME = 30; // seconds
+    public static long lastBackupSeconds = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello world!");
@@ -89,6 +90,7 @@ public class Main {
     }
 
     private static void processPing(boolean processRunning, ServerConnectionStatus status) {
+        if (serverStatus == ServerStatus.BACKING_UP) return;
         if (processRunning) {
             switch (status) {
                 case NO_CONNECTION -> {
@@ -160,6 +162,12 @@ public class Main {
             case STARTING -> {
                 Main.updateOpenMessage("yellow", "The server is starting... (" + time + ")");
                 setServerStatusInfo("Starting server...");
+            }
+            case BACKUP_FINISHED -> {
+                Main.updateOpenMessage("green", "Backup finished, server starting...");
+                lastStatusMessageChannelID = 0;
+                lastStatusMessageID = 0;
+                setServerStatus(ServerStatus.INITIALIZING);
             }
             case ONLINE -> Main.updateOpenMessage("green", "Server is open (" + time + ")");
             case VPN -> Main.updateOpenMessage("orange", "Server is open, " +

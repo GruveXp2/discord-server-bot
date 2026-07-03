@@ -201,6 +201,15 @@ public class ServerCommand extends ListenerAdapter {
         System.out.println("Selected server: " + serverID);
         String out = "Selected server: " + serverID;
 
+        if (serverID.equals("cobblemon") && BackupHandler.shouldBackup(60 * 60 * 24 * 5)) {
+            BackupHandler.backupCobblemonAsync();
+            long lastDays = Main.lastBackupSeconds / 60 / 60 / 24;
+            long lastHours = Main.lastBackupSeconds / 60 / 60 % 24;
+            out +=  "\n:yellow_circle: Taking backup... (Last backup taken " + lastDays + "d " + lastHours + "h ago)";
+            out = "/1" + out; // to update the status when its started
+            return out;
+        }
+
         ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", "/b", "start_server.bat");
         processBuilder.directory(new File(
                 serverID.equals("cobblemon") ? FileLoc.FABRIC_SERVER_FOLDER : FileLoc.VANILLA_SERVER_FOLDER));
