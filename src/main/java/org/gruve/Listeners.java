@@ -58,9 +58,10 @@ public class Listeners extends ListenerAdapter {
                     .build();
             message.editMessage(editData).queue();
             if (serverID.equals("cobblemon")) {
-                e.reply("Have fun on the server :D\n" +
-                        "Note: Since the cobblemon server is modded, it doesnt support plugins and therefore the discord bot wont show info about the server(it will still say offline), but it should be open in about 30 seconds.\n" +
-                        "This also means that the other servers (kingdoms, tribes, botbows) can be open at the same time as cobblemon").setEphemeral(true).queue();
+                e.reply("""
+                        Have fun on the server :D
+                        -# Note: Since the cobblemon server is modded, it doesnt support plugins and therefore the discord bot wont show info about the server(it will still say offline), but it should be open in about 30 seconds.
+                        -# This also means that the other servers (kingdoms, tribes, botbows) can be open at the same time as cobblemon""").setEphemeral(true).queue();
             }
             else {
                 e.reply("Have fun on the server :D").setEphemeral(true).queue();
